@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="height=device-height, initial-scale=1.0">
+    <title>Silent Score</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        img {
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="displayImage" src="images/c-1.png" alt="Challenge Image">
+        <button id="toggleSolution">Show Solution</button>
+        <div class="navigation">
+            <button id="prev" disabled>Previous</button>
+            <button id="next">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentChallenge = 1;
+        const totalChallenges = 7;
+        let showingSolution = false;
+
+        document.getElementById('toggleSolution').addEventListener('click', () => {
+            showingSolution = !showingSolution;
+            updateImage();
+        });
+
+        document.getElementById('prev').addEventListener('click', () => {
+            if (currentChallenge > 1) {
+                currentChallenge--;
+                showingSolution = false;
+                updateImage();
+            }
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            if (currentChallenge < totalChallenges) {
+                currentChallenge++;
+                showingSolution = false;
+                updateImage();
+            }
+        });
+
+        function updateImage() {
+            const imageElement = document.getElementById('displayImage');
+            const toggleButton = document.getElementById('toggleSolution');
+
+            if (showingSolution) {
+                imageElement.src = `images/s-${currentChallenge}.png`;
+                toggleButton.textContent = 'Show Challenge';
+            } else {
+                imageElement.src = `images/c-${currentChallenge}.png`;
+                toggleButton.textContent = 'Show Solution';
+            }
+
+            document.getElementById('prev').disabled = currentChallenge === 1;
+            document.getElementById('next').disabled = currentChallenge === totalChallenges;
+        }
+    </script>
+</body>
+
+</html>
